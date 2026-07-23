@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智蚁云 - AI电话机器人全托管 | 助力传统电销公司实现大模型AI转型</title>
+<meta name="description" content="智蚁云专注AI电话机器人全托管服务，助力传统电销公司实现大模型AI转型。提供AI外呼部署、话术设计、数据分析、精准获客一站式服务，已服务1000+企业客户。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#333;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* Top Banner */
+.top-banner{background:linear-gradient(90deg,#7c5cbf,#9b7fd4,#7c5cbf);color:#fff;text-align:center;padding:10px 20px;font-size:14px;position:relative}
+.top-banner .close-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;opacity:.8}
+.top-banner .close-btn:hover{opacity:1}
+.top-banner span{color:#ffd700;font-weight:600}
+
+/* Navigation */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:15px 60px;background:rgba(10,10,30,0.95);backdrop-filter:blur(20px);box-shadow:0 2px 20px rgba(0,0,0,.3);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(99,102,241,0.15)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{width:40px;height:40px}
+.nav-logo-text{font-size:20px;font-weight:700;background:linear-gradient(90deg,#818cf8,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-logo-sub{font-size:11px;color:rgba(255,255,255,0.4);display:block}
+.nav-menu{display:flex;gap:35px}
+.nav-menu a{font-size:15px;color:rgba(255,255,255,0.7);position:relative;padding:5px 0;transition:.3s}
+.nav-menu a:hover,.nav-menu a.active{color:#818cf8}
+.nav-menu a.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#38bdf8);border-radius:2px}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-phone{font-size:15px;color:rgba(255,255,255,0.7);font-weight:500}
+.nav-login{padding:8px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;font-size:14px;cursor:pointer;transition:.3s;color:rgba(255,255,255,0.8)}
+.nav-login:hover{border-color:#818cf8;color:#818cf8}
+.nav-cta{padding:8px 24px;background:linear-gradient(90deg,#6366f1,#3b82f6);color:#fff;border-radius:20px;font-size:14px;cursor:pointer;transition:.3s;border:none;font-weight:500}
+.nav-cta:hover{background:#3451c7}
+
+/* Hero Section */
+.hero{background:linear-gradient(135deg,#080820 0%,#0d0d3a 30%,#0a1628 70%,#080820 100%);min-height:680px;padding:100px 60px 80px;position:relative;overflow:hidden;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 40%,rgba(65,105,225,.18) 0%,transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:repeating-linear-gradient(90deg,transparent,transparent 99px,rgba(65,105,225,.04) 99px,rgba(65,105,225,.04) 100px),repeating-linear-gradient(0deg,transparent,transparent 99px,rgba(65,105,225,.04) 99px,rgba(65,105,225,.04) 100px);animation:gridMove 20s linear infinite;pointer-events:none}
+@keyframes gridMove{0%{transform:translate(0,0)}100%{transform:translate(100px,100px)}}
+
+/* Particle Canvas */
+#heroCanvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* Starry Sky Canvas */
+#starrySky{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* Glow orbs */
+.hero-glow{position:absolute;border-radius:50%;filter:blur(80px);animation:glowPulse 6s ease-in-out infinite;pointer-events:none}
+.hero-glow.g1{width:400px;height:400px;background:rgba(65,105,225,.15);top:-100px;right:-50px;animation-delay:0s}
+.hero-glow.g2{width:300px;height:300px;background:rgba(124,92,191,.12);bottom:-80px;left:-30px;animation-delay:3s}
+@keyframes glowPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+
+/* Hero Slogan */
+.hero-slogan{position:relative;z-index:10;max-width:900px;margin-bottom:16px;padding:10px 28px;background:rgba(99,102,241,.08);border:1px solid rgba(129,140,248,.2);border-radius:40px;animation:fadeInUp 1s ease-out both}
+.hero-slogan-text{font-size:22px;font-weight:700;letter-spacing:3px;line-height:1.6;background:linear-gradient(90deg,#38bdf8,#818cf8,#a78bfa,#38bdf8);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:sloganShimmer 4s linear infinite;filter:drop-shadow(0 0 12px rgba(129,140,248,.35))}
+@keyframes sloganShimmer{0%{background-position:300% 0}100%{background-position:-300% 0}}
+
+.hero-tag{display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(65,105,225,.3);padding:8px 20px;border-radius:20px;font-size:13px;color:rgba(255,255,255,.8);margin-bottom:30px;letter-spacing:1px;animation:fadeInDown .8s ease-out both}
+
+.hero-title{font-size:58px;font-weight:800;line-height:1.25;margin-bottom:20px;max-width:800px;letter-spacing:3px;animation:fadeInUp 1s ease-out .2s both;text-shadow:0 0 40px rgba(65,105,225,.3)}
+.hero-title .highlight{background:linear-gradient(90deg,#38bdf8,#818cf8,#a78bfa);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.hero-subtitle{font-size:20px;color:rgba(255,255,255,.75);margin-bottom:40px;max-width:600px;animation:fadeInUp 1s ease-out .4s both}
+.hero-btns{display:flex;gap:20px;margin-bottom:50px;animation:fadeInUp 1s ease-out .6s both}
+.hero-btn-primary{padding:16px 42px;background:linear-gradient(90deg,#6366f1,#3b82f6);color:#fff;border:none;border-radius:30px;font-size:17px;cursor:pointer;transition:.3s;font-weight:600;position:relative;overflow:hidden}
+.hero-btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:.5s}
+.hero-btn-primary:hover::after{left:100%}
+.hero-btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(65,105,225,.5)}
+.hero-btn-secondary{padding:16px 42px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:30px;font-size:17px;cursor:pointer;transition:.3s}
+.hero-btn-secondary:hover{border-color:#fff;background:rgba(255,255,255,.05)}
+
+.hero-stats{display:flex;gap:60px;justify-content:center;animation:fadeInUp 1s ease-out .8s both}
+.hero-stat{position:relative;padding:0 20px}
+.hero-stat::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.12)}
+.hero-stat:last-child::after{display:none}
+.hero-stat-num{font-size:38px;font-weight:800;background:linear-gradient(90deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:14px;color:rgba(255,255,255,.6);margin-top:6px;letter-spacing:.5px}
+
+/* Hero Feature Cards */
+.hero-features{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:60px;max-width:1000px;width:100%;animation:fadeInUp 1s ease-out 1s both}
+.hero-feature-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px 20px;transition:.4s;position:relative;overflow:hidden}
+.hero-feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(65,105,225,.6),transparent);opacity:0;transition:.4s}
+.hero-feature-card:hover::before{opacity:1}
+.hero-feature-card:hover{background:rgba(255,255,255,.1);transform:translateY(-5px);border-color:rgba(65,105,225,.3)}
+.hero-feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.hero-feature-icon.blue{background:rgba(65,105,225,.25)}
+.hero-feature-icon.purple{background:rgba(124,92,191,.25)}
+.hero-feature-icon.yellow{background:rgba(255,215,0,.15)}
+.hero-feature-icon.green{background:rgba(0,212,170,.18)}
+.hero-feature-title{font-size:17px;font-weight:600;margin-bottom:8px}
+.hero-feature-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6}
+
+/* Animations */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Services Section */
+.section{padding:80px 60px}
+.section-title{text-align:center;font-size:32px;font-weight:700;margin-bottom:10px}
+.section-subtitle{text-align:center;font-size:16px;color:#666;margin-bottom:50px}
+.services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;max-width:1200px;margin:0 auto}
+.service-card{background:#fff;border-radius:12px;padding:30px 20px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.06);transition:.3s;border:1px solid #f0f0f0}
+.service-card:hover{transform:translateY(-5px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.service-icon{width:60px;height:60px;border-radius:15px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.service-icon.blue{background:linear-gradient(135deg,#e8eeff,#d0dcff)}
+.service-icon.green{background:linear-gradient(135deg,#e8fff5,#d0ffe8)}
+.service-icon.orange{background:linear-gradient(135deg,#fff3e8,#ffe0c0)}
+.service-icon.purple{background:linear-gradient(135deg,#f0e8ff,#e0d0ff)}
+.service-icon.red{background:linear-gradient(135deg,#ffe8ee,#ffd0dc)}
+.service-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.service-card p{font-size:13px;color:#888;line-height:1.5}
+
+/* Industries Section */
+.industries-section{background:#f8f9ff}
+.industries-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:0 auto}
+.industry-card{background:#fff;border-radius:12px;padding:30px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04);transition:.3s;border:1px solid #f0f0f0}
+.industry-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.industry-icon{font-size:36px;margin-bottom:12px}
+.industry-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.industry-card p{font-size:13px;color:#888;line-height:1.5}
+
+/* Advantages Section */
+.advantages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1200px;margin:0 auto}
+.advantage-card{background:#fff;border-radius:12px;padding:35px;box-shadow:0 4px 15px rgba(0,0,0,.06);transition:.3s;border-left:4px solid #4169e1}
+.advantage-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.advantage-num{font-size:36px;font-weight:700;color:#4169e1;margin-bottom:10px}
+.advantage-card h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.advantage-card p{font-size:14px;color:#666;line-height:1.6}
+
+/* Process Section */
+.process-section{background:#f8f9ff}
+.process-steps{display:flex;justify-content:center;gap:30px;max-width:1000px;margin:0 auto;position:relative}
+.process-steps::before{content:'';position:absolute;top:40px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,#4169e1,#00d4aa)}
+.process-step{text-align:center;position:relative;z-index:1}
+.process-step-num{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#4169e1,#5b7ff0);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin:0 auto 15px;box-shadow:0 4px 15px rgba(65,105,225,.3)}
+.process-step h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.process-step p{font-size:13px;color:#888}
+
+/* About Section */
+.about-content{display:flex;gap:60px;max-width:1200px;margin:0 auto;align-items:center}
+.about-text{flex:1}
+.about-text h3{font-size:24px;font-weight:700;margin-bottom:15px}
+.about-text p{font-size:15px;color:#666;line-height:1.8;margin-bottom:15px}
+.about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.about-stat-card{background:linear-gradient(135deg,#f8f9ff,#eef0ff);border-radius:12px;padding:25px;text-align:center}
+.about-stat-num{font-size:32px;font-weight:700;color:#4169e1}
+.about-stat-label{font-size:13px;color:#888;margin-top:5px}
+.about-highlight{font-size:20px;font-weight:700;background:linear-gradient(90deg,#6366f1,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px!important}
+.about-service-item:hover{border-color:rgba(99,102,241,.3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(99,102,241,.1)}
+
+/* CTA Section */
+.cta-section{background:linear-gradient(135deg,#1a1a3e,#2a1a4e);padding:80px 60px;text-align:center;color:#fff}
+.cta-section h2{font-size:32px;font-weight:700;margin-bottom:15px}
+.cta-section p{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:30px}
+.cta-btn{padding:16px 48px;background:linear-gradient(90deg,#4169e1,#5b7ff0);color:#fff;border:none;border-radius:30px;font-size:18px;cursor:pointer;transition:.3s;font-weight:500}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(65,105,225,.4)}
+
+/* Footer */
+.footer{background:#0c0a1f;color:#fff;padding:60px 60px 30px;border-top:1px solid rgba(99,102,241,0.1)}
+.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
+.footer-brand h3{font-size:20px;font-weight:700;margin-bottom:10px;background:linear-gradient(90deg,#818cf8,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6}
+.footer-col h4{font-size:15px;font-weight:600;margin-bottom:15px}
+.footer-col a{display:block;font-size:14px;color:#888;margin-bottom:10px;transition:.3s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{text-align:center;padding-top:30px;margin-top:30px;border-top:1px solid #333;font-size:13px;color:#666}
+.footer-bottom a{color:#888}
+
+/* Responsive */
+@media(max-width:768px){
+.navbar{padding:15px 20px;flex-wrap:wrap}
+.nav-menu{display:none}
+.hero{padding:60px 20px;min-height:auto}
+.hero-slogan-text{font-size:16px;letter-spacing:1px}
+.hero-title{font-size:32px}
+.hero-subtitle{font-size:16px}
+.hero-stats{flex-wrap:wrap;gap:30px}
+.hero-stat{padding:0 15px}
+.hero-stat::after{display:none}
+.hero-stat-num{font-size:28px}
+.hero-features{grid-template-columns:1fr 1fr;max-width:100%}
+.services-grid{grid-template-columns:repeat(2,1fr)}
+.industries-grid{grid-template-columns:repeat(2,1fr)}
+.advantages-grid{grid-template-columns:1fr}
+.process-steps{flex-wrap:wrap}
+.about-content{flex-direction:column}
+.footer-content{grid-template-columns:1fr}
+}
+
+/* Splash Screen */
+.splash{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;background:#000;opacity:1;transition:opacity 0.8s ease-out}
+.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 30% 20%,#1a0a3e 0%,#080820 40%,#0a0020 70%,#000 100%)}
+#splashCosmos{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+.splash-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.05) 60%,rgba(0,0,0,0.5) 100%)}
+
+.splash-slogan{text-align:center;position:relative;z-index:2;opacity:0;transform:scale(0.92);transition:opacity 1.2s ease-out,transform 1.2s ease-out}
+.splash-slogan.in{opacity:1;transform:scale(1)}
+.splash-slogan-text{display:block;font-size:64px;font-weight:900;color:#fff;letter-spacing:6px;line-height:1.3;text-shadow:0 0 40px rgba(99,102,241,0.4),0 0 80px rgba(56,189,248,0.2),0 4px 20px rgba(0,0,0,0.5)}
+.splash-slogan-text .hl{color:#818cf8;text-shadow:0 0 40px rgba(129,140,248,0.6),0 0 80px rgba(99,102,241,0.3),0 4px 20px rgba(0,0,0,0.5)}
+.splash-slogan-sub{display:block;margin-top:30px;font-size:15px;color:rgba(255,255,255,0.35);letter-spacing:8px;font-weight:500}
+.splash.fade-out{opacity:0;pointer-events:none;transition:opacity 0.8s ease-out}
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div class="splash" id="splash">
+  <canvas id="splashCosmos"></canvas>
+  <div class="splash-overlay"></div>
+  <div class="splash-slogan" id="splashSlogan">
+    <span class="splash-slogan-text">机器人是工具，我们是<br>和你业务长在一起的<span class="hl">AI销售生命体</span></span>
+    <span class="splash-slogan-sub">智蚁云 · AI CALL ROBOT</span>
+  </div>
+</div>
+
+<!-- Top Banner -->
+<div class="top-banner" id="topBanner">
+  让你的组织拥有数字员工，再让数字员工成为智能体组织！拨打 <span>156-2327-5757</span> 体验！
+  <span class="close-btn" onclick="document.getElementById('topBanner').style.display='none'">×</span>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-logo">
+    <div>
+      <span class="nav-logo-text">智蚁云</span>
+      <span class="nav-logo-sub">AI CALL ROBOT</span>
+    </div>
+  </div>
+  <div class="nav-menu">
+    <a href="#hero" class="active">首页</a>
+    <a href="#services">产品</a>
+    <a href="#industries">服务</a>
+    <a href="#advantages">技术</a>
+    <a href="#process">场景</a>
+    <a href="#about">关于</a>
+    <a href="#footer">联系</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-phone">156-2327-5757</span>
+    <span class="nav-login">登录</span>
+    <span class="nav-cta">免费使用</span>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <!-- Particle network canvas -->
+  <canvas id="heroCanvas"></canvas>
+  <!-- Starry sky canvas -->
+  <canvas id="starrySky"></canvas>
+  <!-- Glow orbs -->
+  <div class="hero-glow g1"></div>
+  <div class="hero-glow g2"></div>
+
+  <!-- Slogan -->
+  </div>
+
+  <h1 class="hero-title">助力传统电销公司<br>实现<span class="highlight">大模型AI转型</span></h1>
+  <p class="hero-subtitle">AI电话机器人全托管 · 已服务1000+企业客户</p>
+  <div class="hero-btns">
+    <button class="hero-btn-primary">🚀 注册体验</button>
+    <button class="hero-btn-secondary">了解更多 →</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">10,000+</div><div class="hero-stat-label">目标服务企业</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">95%</div><div class="hero-stat-label">意图识别准确率</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">70%</div><div class="hero-stat-label">人力成本降低</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">7×24</div><div class="hero-stat-label">不间断运营支持</div></div>
+  </div>
+
+  <div class="hero-features">
+    <div class="hero-feature-card">
+      <div class="hero-feature-icon blue">🤖</div>
+      <div class="hero-feature-title">AI Voice Agent</div>
+      <div class="hero-feature-desc">支持语音呼叫、智能交互、多轮对话</div>
+    </div>
+    <div class="hero-feature-card">
+      <div class="hero-feature-icon purple">🌐</div>
+      <div class="hero-feature-title">浏览器自动控制</div>
+      <div class="hero-feature-desc">支持网页操作、点击、输入、自动执行流程</div>
+    </div>
+    <div class="hero-feature-card">
+      <div class="hero-feature-icon yellow">⚙️</div>
+      <div class="hero-feature-title">Agent 自动化</div>
+      <div class="hero-feature-desc">AI 可联动浏览器与任务流，实现自动执行</div>
+    </div>
+    <div class="hero-feature-card">
+      <div class="hero-feature-icon green">🔗</div>
+      <div class="hero-feature-title">开放API集成</div>
+      <div class="hero-feature-desc">开放API接口，支持企业快速集成部署</div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="section" id="services">
+  <h2 class="section-title">核心服务</h2>
+  <p class="section-subtitle">从AI外呼到客户管理，全链路数字化解决方案</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon blue">🤖</div>
+      <h3>语音智能体</h3>
+      <p>大模型驱动AI外呼</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon green">📞</div>
+      <h3>大模型呼入</h3>
+      <p>智能接听与分流</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon orange">⚙️</div>
+      <h3>规则引擎2.0</h3>
+      <p>灵活配置业务逻辑</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon purple">📊</div>
+      <h3>免费CRM</h3>
+      <p>客户管理全链路</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon red">🤝</div>
+      <h3>人机协同</h3>
+      <p>AI辅助人工坐席</p>
+    </div>
+  </div>
+</section>
+
+<!-- Industries Section -->
+<section class="section industries-section" id="industries">
+  <h2 class="section-title">行业解决方案</h2>
+  <p class="section-subtitle">覆盖多个行业，量身定制AI外呼方案</p>
+  <div class="industries-grid">
+    <div class="industry-card">
+      <div class="industry-icon">🏠</div>
+      <h3>房产中介</h3>
+      <p>房源推广、客户筛选、邀约看房，AI外呼效率提升5倍</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🎓</div>
+      <h3>教育培训</h3>
+      <p>招生推广、课程咨询、学员回访，精准触达目标家长</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🏥</div>
+      <h3>医疗健康</h3>
+      <p>健康回访、预约提醒、满意度调查，合规高效触达</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🚗</div>
+      <h3>汽车销售</h3>
+      <p>线索跟进、活动邀约、保养提醒，提升到店转化率</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">💰</div>
+      <h3>金融服务</h3>
+      <p>贷款推广、风险评估、逾期提醒，合规外呼保障安全</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🛒</div>
+      <h3>电商零售</h3>
+      <p>会员营销、活动通知、复购唤醒，低成本批量触达</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">💼</div>
+      <h3>企业服务</h3>
+      <p>SaaS推广、商机挖掘、客户维护，自动化获客闭环</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">📱</div>
+      <h3>互联网</h3>
+      <p>用户激活、产品推广、满意度调研，数据驱动精准营销</p>
+    </div>
+  </div>
+</section>
+
+<!-- Advantages Section -->
+<section class="section" id="advantages">
+  <h2 class="section-title">为什么选择智蚁云</h2>
+  <p class="section-subtitle">六大核心优势，让AI外呼真正落地见效</p>
+  <div class="advantages-grid">
+    <div class="advantage-card">
+      <div class="advantage-num">01</div>
+      <h3>大模型AI驱动</h3>
+      <p>采用最新大模型技术，对话能力远超传统机器人，客户愿意多聊，意向筛选更精准</p>
+    </div>
+    <div class="advantage-card">
+      <div class="advantage-num">02</div>
+      <h3>全托管服务</h3>
+      <p>从话术设计、系统配置到数据优化，全程由专业团队负责，客户只需专注成交转化</p>
+    </div>
+    <div class="advantage-card">
+      <div class="advantage-num">03</div>
+      <h3>自研数据分析系统</h3>
+      <p>每通电话智能分析，持续优化话术和策略，获客成本平均控制在两元到十几元每个</p>
+    </div>
+    <div class="advantage-card">
+      <div class="advantage-num">04</div>
+      <h3>机器人不收费</h3>
+      <p>按分钟计费，打通才收费，不通不计费，机器人本身零费用，降低试错成本</p>
+    </div>
+    <div class="advantage-card">
+      <div class="advantage-num">05</div>
+      <h3>1000+企业验证</h3>
+      <p>已服务超过1000家企业客户，覆盖房产、教育、金融、电商等多个行业，效果可验证</p>
+    </div>
+    <div class="advantage-card">
+      <div class="advantage-num">06</div>
+      <h3>合规保障</h3>
+      <p>严格遵守通信行业规范，白名单高频不封号，投诉率控制在0.1%以下，安全稳定运营</p>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="section process-section" id="process">
+  <h2 class="section-title">服务流程</h2>
+  <p class="section-subtitle">四步完成AI外呼部署，快速见效</p>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="process-step-num">1</div>
+      <h3>需求沟通</h3>
+      <p>了解业务场景和目标</p>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">2</div>
+      <h3>话术设计</h3>
+      <p>专业团队定制专属话术</p>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">3</div>
+      <h3>系统配置</h3>
+      <p>大模型配置上线测试</p>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">4</div>
+      <h3>持续优化</h3>
+      <p>数据分析迭代提升效果</p>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="section" id="about">
+  <div class="about-content">
+    <div class="about-text">
+      <h3>关于智蚁云</h3>
+      <p class="about-highlight">智蚁云 · AI电话机器人全托管品牌</p>
+      <p>我们相信，AI不是替代人的工具，而是与人共同成长的伙伴。智蚁云从创立之初就坚持一个理念：不卖纯工具，而是深入业务场景，提供从话术设计到数据优化的全托管服务，让每一通电话都成为企业增长的起点。</p>
+      <p>已服务超过1000家企业客户，覆盖房产、教育、金融、电商等多个行业。我们的核心价值不是技术有多先进，而是能让技术真正落地——快速部署、持续迭代、全程陪跑，让每个企业都用得起、用得好AI外呼。</p>
+      <p>机器人是工具，我们是你业务里长出来的AI销售生命体。</p>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat-card">
+        <div class="about-stat-num">1000+</div>
+        <div class="about-stat-label">服务企业客户</div>
+      </div>
+      <div class="about-stat-card">
+        <div class="about-stat-num">95%</div>
+        <div class="about-stat-label">意图识别准确率</div>
+      </div>
+      <div class="about-stat-card">
+        <div class="about-stat-num">70%</div>
+        <div class="about-stat-label">人力成本降低</div>
+      </div>
+      <div class="about-stat-card">
+        <div class="about-stat-num">2元+</div>
+        <div class="about-stat-label">单个获客成本</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <h2>立即开启AI外呼新时代</h2>
+  <p>免费配置专属大模型，体验AI外呼效果</p>
+  <button class="cta-btn">🚀 立即预约体验</button>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>智蚁云 AI CALL ROBOT</h3>
+      <p>智蚁云科技（武汉）有限公司<br>专注AI电话机器人全托管<br>助力传统电销公司实现大模型AI转型</p>
+      <p style="margin-top:15px">联系电话：156-2327-5757</p>
+    </div>
+    <div class="footer-col">
+      <h4>产品服务</h4>
+      <a href="#services">语音智能体</a>
+      <a href="#services">大模型呼入</a>
+      <a href="#services">规则引擎2.0</a>
+      <a href="#services">免费CRM</a>
+      <a href="#services">人机协同</a>
+    </div>
+    <div class="footer-col">
+      <h4>行业方案</h4>
+      <a href="#industries">房产中介</a>
+      <a href="#industries">教育培训</a>
+      <a href="#industries">医疗健康</a>
+      <a href="#industries">金融服务</a>
+      <a href="#industries">电商零售</a>
+    </div>
+    <div class="footer-col">
+      <h4>关于我们</h4>
+      <a href="#about">公司介绍</a>
+      <a href="#about">服务流程</a>
+      <a href="#about">核心优势</a>
+      <a href="#footer">联系我们</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 智蚁云科技（武汉）有限公司 · 智蚁云 · <a href="http://beian.miit.gov.cn/" target="_blank">鄂ICP备2026034423号</a></p>
+  </div>
+</footer>
+
+<!-- Side Toolbar -->
+<div style="position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:99;display:flex;flex-direction:column;gap:10px">
+  <div style="background:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.1);font-size:13px;cursor:pointer">📞 电话咨询</div>
+  <div style="background:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.1);font-size:13px;cursor:pointer">💬 在线咨询</div>
+  <div style="background:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.1);font-size:13px;cursor:pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆ 回顶部</div>
+</div>
+
+<!-- Splash + Hero Animation Script -->
+<script>
+(function(){
+  // === Splash Screen: character-by-character fly-in then fly-away ===
+  var splash = document.getElementById('splash');
+  var slogan = document.getElementById('splashSlogan');
+
+  // Lock body scroll during splash
+  document.body.style.overflow = 'hidden';
+
+  // Text fades in immediately
+  setTimeout(function(){ slogan.classList.add('in'); }, 200);
+
+  // After 3s, quickly fade out entire splash page to reveal main site
+  setTimeout(function(){
+    splash.classList.add('fade-out');
+    setTimeout(function(){
+      splash.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 800);
+  }, 4000);
+
+
+  
+  // === Splash Canvas: Cosmic scene with stars and nebula ===
+  var splashCanvas = document.getElementById('splashCosmos');
+  if(splashCanvas){
+    var sCtx = splashCanvas.getContext('2d');
+    var sW, sH;
+    var stars = [];
+    var nebulae = [];
+    
+    function resizeSplash(){
+      sW = splashCanvas.width = window.innerWidth;
+      sH = splashCanvas.height = window.innerHeight;
+    }
+    resizeSplash();
+    window.addEventListener('resize', resizeSplash);
+    
+    // Create stars
+    for(var i=0;i<200;i++){
+      stars.push({
+        x: Math.random()*2000,
+        y: Math.random()*2000,
+        r: Math.random()*1.8+0.3,
+        a: Math.random(),
+        speed: Math.random()*0.005+0.002,
+        phase: Math.random()*Math.PI*2
+      });
+    }
+    
+    // Create nebula clouds
+    for(var i=0;i<5;i++){
+      nebulae.push({
+        x: Math.random()*2000,
+        y: Math.random()*2000,
+        r: 150+Math.random()*200,
+        color: ['rgba(99,102,241,','rgba(139,92,246,','rgba(56,189,248,','rgba(168,85,247,','rgba(59,130,246,'][i],
+        drift: (Math.random()-0.5)*0.1
+      });
+    }
+    
+    var time = 0;
+    function drawCosmos(){
+      if(splash.style.display === 'none') return;
+      time += 0.01;
+      sCtx.clearRect(0,0,sW,sH);
+      
+      // Draw nebulae
+      nebulae.forEach(function(n){
+        var nx = (n.x + n.drift * time * 50) % sW;
+        var ny = (n.y + Math.sin(time + n.x) * 5) % sH;
+        var grad = sCtx.createRadialGradient(nx, ny, 0, nx, ny, n.r);
+        grad.addColorStop(0, n.color + '0.08)');
+        grad.addColorStop(0.5, n.color + '0.03)');
+        grad.addColorStop(1, n.color + '0)');
+        sCtx.fillStyle = grad;
+        sCtx.fillRect(nx - n.r, ny - n.r, n.r*2, n.r*2);
+      });
+      
+      // Draw stars with twinkle
+      stars.forEach(function(s){
+        var sx = s.x % sW;
+        var sy = s.y % sH;
+        var alpha = 0.4 + 0.6 * Math.abs(Math.sin(time * 3 + s.phase));
+        sCtx.beginPath();
+        sCtx.arc(sx, sy, s.r, 0, Math.PI*2);
+        sCtx.fillStyle = 'rgba(255,255,255,' + alpha + ')';
+        sCtx.fill();
+        
+        // Add glow for larger stars
+        if(s.r > 1.2){
+          sCtx.beginPath();
+          sCtx.arc(sx, sy, s.r*3, 0, Math.PI*2);
+          sCtx.fillStyle = 'rgba(180,200,255,' + (alpha * 0.15) + ')';
+          sCtx.fill();
+        }
+      });
+      
+      // Slow planet-like orb
+      var px = sW * 0.75 + Math.sin(time*0.3) * 20;
+      var py = sH * 0.3 + Math.cos(time*0.2) * 10;
+      var planetGrad = sCtx.createRadialGradient(px-15, py-15, 5, px, py, 60);
+      planetGrad.addColorStop(0, 'rgba(139,92,246,0.3)');
+      planetGrad.addColorStop(0.5, 'rgba(99,102,241,0.15)');
+      planetGrad.addColorStop(1, 'rgba(99,102,241,0)');
+      sCtx.fillStyle = planetGrad;
+      sCtx.beginPath();
+      sCtx.arc(px, py, 60, 0, Math.PI*2);
+      sCtx.fill();
+      
+      // Second smaller planet
+      var p2x = sW * 0.2 + Math.cos(time*0.4) * 15;
+      var p2y = sH * 0.65 + Math.sin(time*0.25) * 8;
+      var p2Grad = sCtx.createRadialGradient(p2x-8, p2y-8, 3, p2x, p2y, 35);
+      p2Grad.addColorStop(0, 'rgba(56,189,248,0.25)');
+      p2Grad.addColorStop(0.6, 'rgba(56,189,248,0.08)');
+      p2Grad.addColorStop(1, 'rgba(56,189,248,0)');
+      sCtx.fillStyle = p2Grad;
+      sCtx.beginPath();
+      sCtx.arc(p2x, p2y, 35, 0, Math.PI*2);
+      sCtx.fill();
+      
+      requestAnimationFrame(drawCosmos);
+    }
+    drawCosmos();
+  }
+
+  // === Hero Canvas: particle network ===
+  var canvas = document.getElementById('heroCanvas');
+  if(canvas){
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var W, H;
+    var particleCount = 50;
+    var maxDist = 120;
+
+    function resize(){
+      var rect = canvas.parentElement.getBoundingClientRect();
+      W = canvas.width = rect.width;
+      H = canvas.height = rect.height;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function createParticles(){
+      particles = [];
+      for(var i=0;i<particleCount;i++){
+        particles.push({
+          x: Math.random()*W,
+          y: Math.random()*H,
+          vx: (Math.random()-0.5)*0.4,
+          vy: (Math.random()-0.5)*0.4,
+          r: 1.5 + Math.random()*1.5
+        });
+      }
+    }
+    createParticles();
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<particles.length;i++){
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if(p.x<0||p.x>W) p.vx*=-1;
+        if(p.y<0||p.y>H) p.vy*=-1;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(65,105,225,0.35)';
+        ctx.fill();
+
+        // Draw connections
+        for(var j=i+1;j<particles.length;j++){
+          var q = particles[j];
+          var dx = p.x-q.x, dy = p.y-q.y;
+          var dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist<maxDist){
+            ctx.beginPath();
+            ctx.moveTo(p.x,p.y);
+            ctx.lineTo(q.x,q.y);
+            ctx.strokeStyle = 'rgba(65,105,225,'+(0.15*(1-dist/maxDist))+')';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  // === Starry Sky: twinkling stars ===
+  var skyCanvas = document.getElementById('starrySky');
+  if(skyCanvas){
+    var sCtx = skyCanvas.getContext('2d');
+    var stars = [];
+    var sW, sH;
+    var starCount = 120;
+
+    function resizeSky(){
+      var rect = skyCanvas.parentElement.getBoundingClientRect();
+      sW = skyCanvas.width = rect.width;
+      sH = skyCanvas.height = rect.height;
+    }
+    resizeSky();
+    window.addEventListener('resize', resizeSky);
+
+    for(var i=0;i<starCount;i++){
+      stars.push({
+        x: Math.random()*sW,
+        y: Math.random()*sH,
+        r: 0.5 + Math.random()*1.5,
+        alpha: Math.random(),
+        da: (0.005 + Math.random()*0.015) * (Math.random()>0.5?1:-1)
+      });
+    }
+
+    function drawStars(){
+      sCtx.clearRect(0,0,sW,sH);
+      for(var i=0;i<stars.length;i++){
+        var s = stars[i];
+        s.alpha += s.da;
+        if(s.alpha>1){s.alpha=1;s.da*=-1;}
+        if(s.alpha<0.1){s.alpha=0.1;s.da*=-1;}
+
+        // Star glow
+        var grad = sCtx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*3);
+        grad.addColorStop(0,'rgba(200,210,255,'+s.alpha+')');
+        grad.addColorStop(1,'rgba(200,210,255,0)');
+        sCtx.beginPath();
+        sCtx.arc(s.x,s.y,s.r*3,0,Math.PI*2);
+        sCtx.fillStyle = grad;
+        sCtx.fill();
+
+        // Star core
+        sCtx.beginPath();
+        sCtx.arc(s.x,s.y,s.r*0.6,0,Math.PI*2);
+        sCtx.fillStyle = 'rgba(255,255,255,'+s.alpha+')';
+        sCtx.fill();
+      }
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+  }
+})();
+</script>
+
+</body>
+</html>
